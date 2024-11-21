@@ -20,7 +20,7 @@ function corsResponse(data, status = 200) {
     const corsHeaders = {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Max-Age': '86400',
     };
 
@@ -56,9 +56,9 @@ export async function onRequest(context) {
     const formattedDate = new Intl.DateTimeFormat('zh-CN', options).format(timedata);
     const { url, slug } = await request.json();
     const corsHeaders = {
-         'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Headers': 'Content-Type',
         'Access-Control-Max-Age': '86400',
     };
 
