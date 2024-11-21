@@ -16,17 +16,25 @@ function generateRandomString(length) {
     return result;
 }
 
+function corsResponse(data, status = 200) {
+    const corsHeaders = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Max-Age': '86400',
+    };
+
+    return new Response(JSON.stringify(data), {
+        status,
+        headers: corsHeaders,
+    });
+}
+
 export async function onRequest(context) {
     if (context.request.method === 'OPTIONS') {
-        return new Response(null, {
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'POST, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type',
-                'Access-Control-Max-Age': '86400', // 24小时
-            },
-        });
+       return corsResponse(null, 200);
     }
+
 // export async function onRequestPost(context) {
     const { request, env } = context;
     const originurl = new URL(request.url);
@@ -48,10 +56,12 @@ export async function onRequest(context) {
     const formattedDate = new Intl.DateTimeFormat('zh-CN', options).format(timedata);
     const { url, slug } = await request.json();
     const corsHeaders = {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Max-Age': '86400', // 24 hours
+         'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Max-Age': '86400',
     };
+
     if (!url) return Response.json({ message: 'Missing required parameter: url.' });
 
     // url格式检查
