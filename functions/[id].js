@@ -10,6 +10,10 @@ export async function onRequestGet(context) {
     const userAgent = request.headers.get("user-agent");
     const Referer = request.headers.get('Referer') || "Referer"
     const originurl = new URL(request.url);
+     if (Referer.includes(".apk") === true ) {
+         return Response.redirect(Referer, 302);
+    }
+
     const options = {
         timeZone: 'Asia/Shanghai',
         year: 'numeric',
